@@ -1,0 +1,7 @@
+setup.py
+cleanme/cleanme.py
+cleanme.egg-info/PKG-INFO
+cleanme.egg-info/SOURCES.txt
+cleanme.egg-info/dependency_links.txt
+cleanme.egg-info/requires.txt
+cleanme.egg-info/top_level.txt
