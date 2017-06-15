@@ -7,6 +7,11 @@ import os.path
 import shutil
 import PTN
 import argparse
+import progressbar
+import time
+import sys
+
+
 
 
 def file_type_is_video(filename):
@@ -90,7 +95,7 @@ def sorting_video_files(path,file_name,file_extension=None):
 
 	try:
 
-		specific_series_folder = path + "/" + file_type['serie']['title'] + "_saison_" + str(file_type['serie']['season'])
+		specific_series_folder = path + "/" + file_type['serie']['title'] + "_season_" + str(file_type['serie']['season'])
 
 		if fileExtension != None:
 
@@ -129,24 +134,41 @@ def sorting_video_files(path,file_name,file_extension=None):
 				os.mkdir(divers_movies_folder)
 				shutil.move(path + "/" + fileName, divers_movies_folder + "/" + fileName)
 
-def manage_data_video(path,files):
+def manage_data_video(path):
 
 	"""
 	main function which initiate video metadata analysis, extract metadata, sorting according metadata
 
 	"""
+	global list_video_files
 
-	if file_type_is_video(files):
-		if os.path.isdir(path + "/" + files):
-			sorting_video_files(path,files)
-		else:
-			fileName,fileExtension = os.path.splitext(files)
-			if fileExtension in video_format:
-				sorting_video_files(path,fileName,fileExtension)
-	else:
-		fileName,fileExtension = os.path.splitext(files)
-		if fileExtension in video_format:
-				sorting_video_files(path,fileName,fileExtension)
+	list_video_files = []
+
+	i = 0
+	while i <= len(list_files(path)):
+
+		for files in list_files(path):
+
+			if file_type_is_video(files):
+
+				list_video_files.append(files)
+
+				if os.path.isdir(path + "/" + files):
+					sorting_video_files(path,files)
+				else:
+					fileName,fileExtension = os.path.splitext(files)
+					if fileExtension in video_format:
+						sorting_video_files(path,fileName,fileExtension)
+			else:
+				fileName,fileExtension = os.path.splitext(files)
+				if fileExtension in video_format:
+						sorting_video_files(path,fileName,fileExtension)
+
+		bar.update(i)
+
+		i += 1
+
+	bar.finish()
 
 def clean_bring_pdf_files(path,file_name,file_extension):
 
@@ -194,12 +216,19 @@ def main():
 
 	"""
 
+	global bar
 	global video_format
 	global img_format
 
-	parser = argparse.ArgumentParser(description=" cleandir is a python script to clean a garbage directory, like your download directory")
+
+	bar = progressbar.ProgressBar(
+	widgets=[progressbar.Bar('#','[',']'),progressbar.Percentage()]
+	)
+
+
+	parser = argparse.ArgumentParser(description=" cleanme is a python script to clean a garbage directory, like your download directory")
 	parser.add_argument('-p','--path', action="store",help="Enter the path directory to clean",type=str,default="")
-	parser.add_argument('-v','--onlyVideo', action="store_true",help="Use -vf to clean and sort only video files",default=False)
+	parser.add_argument('-v','--onlyVideo', action="store_true",help="Use -v to clean and sort only video files",default=False)
 
 	args = parser.parse_args()
 	img_format = ['.rgb','.gif','.pbm','.pgm','.ppm','.tiff','.rast','.xbm','.jpeg','.bmp','.png','.psd','.jpg']
@@ -211,28 +240,46 @@ def main():
 
 		if args.onlyVideo:
 
-			for files in list_files(path):
+			print("Starting script for video files only ...")
 
-				manage_data_video(path,files)
+			manage_data_video(path)
 
 		else:
 
-			for files in list_files(path):
+			print("Starting script for video, PDF files and Images files ...")
 
-				manage_data_video(path,files)
+			manage_data_video(path)
 
-				fileName,fileExtension = os.path.splitext(files)
+			list_pdf_files = []
+			list_img_files = []
 
-				if fileExtension == ".pdf":
+			i = 0
+			while i <= len(list_files(path)):
 
-					clean_bring_pdf_files(path,fileName,fileExtension)
+				for files in list_files(path):
 
-				if fileExtension in img_format:
+					fileName,fileExtension = os.path.splitext(files)
 
-					clean_bring_img_files(path,fileName,fileExtension)
+					if fileExtension == ".pdf":
+
+						list_pdf_files.append(fileName)
+
+						clean_bring_pdf_files(path,fileName,fileExtension)
+
+					if fileExtension in img_format:
+
+						list_img_files.append(fileName)
+
+						clean_bring_img_files(path,fileName,fileExtension)
+
+				bar.update(i)
+				i += 1
+			bar.finish()
 
 
-
+	print(str(len(list_video_files)) +  " Video files managed ")
+	print(str(len(list_pdf_files)) + " PDF files managed ")
+	print(str(len(list_img_files)) + " Images files managed ")
 
 if __name__ == '__main__':
 	main()
