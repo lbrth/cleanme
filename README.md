@@ -36,6 +36,6 @@ It's a script using as command line tool with 2 main options for the moment.
   
   `-p PATH, --path PATH  Enter the path directory to clean`
   
-  `-v, --onlyVideo       Use -vf to clean and sort only video files``
+  `-v, --onlyVideo       Use -vf to clean and sort only video files`
   
   
