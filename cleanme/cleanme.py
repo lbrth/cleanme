@@ -11,7 +11,28 @@ import progressbar
 import time
 import sys
 
+def check_video_extension(filename):
 
+	"""
+	check if the extension is a video format
+
+	"""
+
+	deep_path = path + "/" + filename
+
+	if os.path.isdir(deep_path):
+		for files in list_files(deep_path):
+			fileName,fileExtension = os.path.splitext(files)
+			if fileExtension in video_format:
+				return True
+			else:
+				return False
+	else:
+		fileName,fileExtension = os.path.splitext(files)
+		if fileExtension in video_format:
+			return True
+		else:
+			return False
 
 
 def file_type_is_video(filename):
@@ -37,15 +58,18 @@ def file_type_is_video(filename):
 			return True
 
 	elif 'resolution' in metadata.keys():
-		if 'quality' in metadata.keys():
+
+		if check_video_extension(filename):
 			return True
 		else:
 			return False
 
 	elif 'quality' in metadata.keys():
-		return True
-	else:
-		return False
+
+		if check_video_extension(filename):
+			return True
+		else:
+			return False
 
 def extract_video_metadata(filename):
 
@@ -219,6 +243,10 @@ def main():
 	global bar
 	global video_format
 	global img_format
+	global path
+
+	list_pdf_files = []
+	list_img_files = []
 
 
 	bar = progressbar.ProgressBar(
@@ -249,9 +277,6 @@ def main():
 			print("Starting script for video, PDF files and Images files ...")
 
 			manage_data_video(path)
-
-			list_pdf_files = []
-			list_img_files = []
 
 			i = 0
 			while i <= len(list_files(path)):
