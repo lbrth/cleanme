@@ -20,6 +20,7 @@ def check_video_extension(filename):
 
 	deep_path = path + "/" + filename
 
+
 	if os.path.isdir(deep_path):
 		for files in list_files(deep_path):
 			fileName,fileExtension = os.path.splitext(files)
@@ -28,7 +29,7 @@ def check_video_extension(filename):
 			else:
 				return False
 	else:
-		fileName,fileExtension = os.path.splitext(files)
+		fileName,fileExtension = os.path.splitext(filename)
 		if fileExtension in video_format:
 			return True
 		else:
@@ -260,7 +261,7 @@ def main():
 
 	args = parser.parse_args()
 	img_format = ['.rgb','.gif','.pbm','.pgm','.ppm','.tiff','.rast','.xbm','.jpeg','.bmp','.png','.psd','.jpg']
-	video_format = ['.mkv','.avi','.mp4']
+	video_format = ['.mkv','.avi','.mp4','.AVI']
 
 	if args.path != None:
 
