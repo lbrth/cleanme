@@ -95,8 +95,11 @@ def list_files(path):
 	basic function to list files in a specified directory
 
 	"""
+
 	listFile = os.listdir(path)
 	return listFile
+
+
 
 def sorting_video_files(path,file_name,file_extension=None):
 
@@ -263,7 +266,8 @@ def main():
 	img_format = ['.rgb','.gif','.pbm','.pgm','.ppm','.tiff','.rast','.xbm','.jpeg','.bmp','.png','.psd','.jpg']
 	video_format = ['.mkv','.avi','.mp4','.AVI']
 
-	if args.path != None:
+
+	try:
 
 		path = args.path
 
@@ -303,9 +307,12 @@ def main():
 			bar.finish()
 
 
-	print(str(len(list_video_files)) +  " Video files managed ")
-	print(str(len(list_pdf_files)) + " PDF files managed ")
-	print(str(len(list_img_files)) + " Images files managed ")
+		print(str(len(list_video_files)) +  " Video files managed ")
+		print(str(len(list_pdf_files)) + " PDF files managed ")
+		print(str(len(list_img_files)) + " Images files managed ")
+
+	except FileNotFoundError as e:
+		print("No path directory specified, detailed error : " + str(e))
 
 if __name__ == '__main__':
 	main()
