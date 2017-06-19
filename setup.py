@@ -5,7 +5,7 @@ import cleanme
 
 setup(
 name = 'cleanme',
-version = '0.1',
+version = '0.2',
 author = 'lbrth',
 author_email = 'olivierlabarthe6@gmail.com',
 packages = ['cleanme'],
