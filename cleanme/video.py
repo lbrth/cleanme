@@ -1,7 +1,11 @@
+#!/usr/bin/python
+# -*- coding: utf8 -*-
 import PTN
 import os
 import os.path
+import json
 from managefiles import ManageFiles
+import pdb
 
 global video_format
 
@@ -14,7 +18,16 @@ class Video:
 		self.metadata_serie = None
 		self.metadata_movie = None
 		self.is_video = bool
+		self.is_serie = bool
+		self.is_movie = bool
 		self.video_extension = None
+		self.title = None
+		self.season = None
+		self.episode = None
+		self.quality = None
+		self.resolution = None
+		self.language = None
+		self.extension = None
 
 	def extract_metadata(self,video_file):
 		"""
@@ -23,19 +36,99 @@ class Video:
 
 		"""
 		metadata = PTN.parse(video_file)
-
-		metadata_type = {}
+		#print(metadata)
 
 		if 'season' in metadata.keys():
-			metadata_type['serie'] = metadata
-			self.metadata_serie = metadata_type
-			print(self.metadata_serie)
-			return self.metadata_serie
+
+			self.is_serie = True
+			self.is_movie = False
+			self.title = metadata["title"]
+			self.season = metadata["season"]
+			self.episode = metadata["episode"]
+			try:
+				self.quality = metadata["quality"]
+			except KeyError:
+				self.quality = None
+			try:
+				self.resolution = metadata["resolution"]
+			except KeyError:
+				self.resolution = None
+			try:
+				self.language = metadata["excess"]
+			except KeyError:
+				self.language = None
+			try:
+				self.extension = metadata["container"]
+			except KeyError:
+				self.extension = None
+
+			return {
+			  "type": {
+				"serie" : [
+				  {"status" : self.is_serie},
+				  {"title" : self.title},
+				  {"season" : self.season},
+				  {"episode" : self.episode},
+				  {"quality" : self.quality},
+				  {"resolution":self.resolution},
+				  {"language" : self.language},
+				  {"extension" : self.extension}
+				],
+				"film" : [
+				  {"status" : self.is_movie},
+				  {"title" : self.title},
+				  {"quality" : self.quality},
+				  {"resolution":self.resolution},
+				  {"language" : self.language},
+				  {"extension" :self.extension}
+				]
+			  }
+			}
+
 		else:
-			metadata_type['movie'] =  metadata
-			self.metadata_movie = metadata_type
-			print(self.metadata_movie)
-			return self.metadata_movie
+
+			self.is_serie = False
+			self.is_movie = True
+			self.title = metadata["title"]
+			try:
+				self.quality = metadata["quality"]
+			except KeyError:
+				self.quality = None
+			try:
+				self.resolution = metadata["resolution"]
+			except KeyError:
+				self.resolution = None
+			try:
+				self.language = metadata["excess"]
+			except KeyError:
+				self.language = None
+			try:
+				self.extension = metadata["container"]
+			except KeyError:
+				self.extension = None
+
+			return {
+			  "type": {
+				"serie" : [
+				  {"status" : self.is_serie },
+				  {"title" : self.title},
+				  {"season" : self.season},
+				  {"episode" : self.episode},
+				  {"quality" : self.quality},
+				  {"resolution":self.resolution},
+				  {"language" : self.language},
+				  {"extension" : self.extension}
+				],
+				"film" : [
+				  {"status" : self.is_movie},
+				  {"title" : self.title},
+				  {"quality" : self.quality},
+				  {"resolution":self.resolution},
+				  {"language" : self.language},
+				  {"extension" :self.extension}
+				]
+			  }
+			}
 
 
 
@@ -52,6 +145,8 @@ class Video:
 		"""
 
 		metadata = PTN.parse(video_file)
+
+		print(metadata)
 
 		video_check = ManageFiles()
 		self.video_extension = video_check.split_files(video_file)["file_extension"]
@@ -90,6 +185,28 @@ class Video:
 					return self.is_video
 
 		elif 'quality' in metadata.keys():
+
+			deep_path = path + "/" + video_file
+
+			if os.path.isdir(deep_path):
+				#print("dossier video : " + video_file)
+				for data in video_check.list_files(deep_path):
+					self.video_extension = video_check.split_files(data)["file_extension"]
+					if self.video_extension in video_format:
+						self.is_video = True
+						return self.is_video
+					else:
+						self.is_video = False
+						return self.is_video
+
+			elif self.video_extension != None:
+				if self.video_extension in video_format:
+					self.is_video = True
+					return self.is_video
+				else:
+					self.is_video = False
+					return self.is_video
+		elif 'season' or 'episode' in metadata.keys():
 
 			deep_path = path + "/" + video_file
 

@@ -12,10 +12,12 @@ import time
 import sys
 from video import Video
 from managefiles import ManageFiles
+from workers import Worker
 
 
 video = Video()
 data_files = ManageFiles()
+worker = Worker()
 
 
 
@@ -38,93 +40,95 @@ def sorting_video_files(path,files,path_dest=None):
 	"""
 
 
-	filename = data_files.split_files(files)["filename"]
-	file_extension = data_files.split_files(files)["file_extension"]
+	data_files.split_files(files)
+
+	filename = data_files.filename
+	file_extension = data_files.file_extension
+
+
+	video.extract_metadata(files)
+
 
 	if path_dest != None:
 
-		try:
-			serie = video.extract_metadata(files)["serie"]
-			folder_title = "/" + serie['title'] + "_season_" + str(serie['season'])
-			specific_series_folder = path_dest + folder_title
+		if video.is_video:
 
-			if file_extension != None:
+			if video.is_serie:
 
-				if os.path.exists(specific_series_folder):
-					shutil.move(path + "/" + files, specific_series_folder + "/" + files)
+				folder_title = "/" + video.title + "_season_" + str(video.season)
+				specific_series_folder = path_dest + folder_title
+
+				if data_files.file_extension != None:
+
+					if os.path.exists(specific_series_folder):
+						shutil.move(path + "/" + files, specific_series_folder + "/" + files)
+					else:
+						os.mkdir(specific_series_folder)
+						shutil.move(path + "/" + files, specific_series_folder + "/" + files)
+
 				else:
-					os.mkdir(specific_series_folder)
-					shutil.move(path + "/" + files, specific_series_folder + "/" + files)
-
+					if os.path.exists(specific_series_folder):
+						shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
+					else:
+						os.mkdir(specific_series_folder)
+						shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
 			else:
 
-				if os.path.exists(specific_series_folder):
-					shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
+				folder_title = "/divers_movies"
+				divers_movies_folder = path_dest + folder_title
+
+				if data_files.file_extension != None:
+					if os.path.exists(divers_movies_folder):
+						shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
+					else:
+						os.mkdir(divers_movies_folder)
+						shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
 				else:
-					os.mkdir(specific_series_folder)
-					shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
-
-		except:
-
-			folder_title = "/divers_movies"
-			divers_movies_folder = path_dest + folder_title
-
-			if file_extension != None:
-				if os.path.exists(divers_movies_folder):
-					shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
-				else:
-					os.mkdir(divers_movies_folder)
-					shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
-
-			else:
-
-				if os.path.exists(divers_movies_folder):
-					shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
-				else:
-					os.mkdir(divers_movies_folder)
-					shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
+					if os.path.exists(divers_movies_folder):
+						shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
+					else:
+						os.mkdir(divers_movies_folder)
+						shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
 	else:
 
-		try:
+		if video.is_video:
 
-			serie = video.extract_metadata(files)["serie"]
-			specific_series_folder = path + "/" + serie['title'] + "_season_" + str(serie['season'])
+			if video.is_serie:
 
-			if file_extension != None:
+				specific_series_folder = path + "/" + video.title + "_season_" + str(video.season)
 
-				if os.path.exists(specific_series_folder):
-					shutil.move(path + "/" + files, specific_series_folder + "/" + files)
+				if data_files.file_extension != None:
+
+					if os.path.exists(specific_series_folder):
+						shutil.move(path + "/" + files, specific_series_folder + "/" + files)
+					else:
+						os.mkdir(specific_series_folder)
+						shutil.move(path + "/" + files, specific_series_folder + "/" + files)
 				else:
-					os.mkdir(specific_series_folder)
-					shutil.move(path + "/" + files, specific_series_folder + "/" + files)
-
+					if os.path.exists(specific_series_folder):
+						shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
+					else:
+						os.mkdir(specific_series_folder)
+						shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
 			else:
 
-				if os.path.exists(specific_series_folder):
-					shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
+
+				divers_movies_folder = path + "/divers_movies"
+
+				if data_files.file_extension != None:
+
+					if os.path.exists(divers_movies_folder):
+						shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
+					else:
+						os.mkdir(divers_movies_folder)
+						shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
 				else:
-					os.mkdir(specific_series_folder)
-					shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
 
-		except:
-
-			divers_movies_folder = path + "/divers_movies"
-
-			if file_extension != None:
-
-				if os.path.exists(divers_movies_folder):
-					shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
-				else:
-					os.mkdir(divers_movies_folder)
-					shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
-
-			else:
-
-				if os.path.exists(divers_movies_folder):
-					shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
-				else:
-					os.mkdir(divers_movies_folder)
-					shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
+					if os.path.exists(divers_movies_folder):
+						shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
+					else:
+						os.mkdir(divers_movies_folder)
+						shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
 
 def manage_data_video(path,path_dest=None):
 
@@ -145,10 +149,6 @@ def manage_data_video(path,path_dest=None):
 		for files in list_files:
 
 			if video.check(path,files):
-
-				#print("Ficher video " + files)
-
-				#file_extension = data_files.split_files(files)["file_extension"]
 
 				list_video_files.append(files)
 
@@ -202,10 +202,15 @@ def main():
 
 			print(" -> Starting script for video files only ...")
 
-			manage_data_video(path)
+
+			worker.deduplication(path)
+
+			print(worker.count_duplicate)
+
+			#manage_data_video(path)
 
 
-			print(str(len(list_video_files)) +  " Video files managed ")
+			#print(str(len(list_video_files)) +  " Video files managed ")
 
 		elif args.destination:
 

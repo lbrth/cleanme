@@ -1,5 +1,8 @@
+README.md
 setup.py
 cleanme/cleanme.py
+cleanme/managefiles.py
+cleanme/video.py
 cleanme.egg-info/PKG-INFO
 cleanme.egg-info/SOURCES.txt
 cleanme.egg-info/dependency_links.txt
