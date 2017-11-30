@@ -19,13 +19,13 @@ video = Video()
 data_files = ManageFiles()
 worker = Worker()
 
-
+"""
 
 def sorting_video_files(path,files,path_dest=None):
 
 	global folder_title
 
-	"""
+
 	main function to sort video files
 
 	if the video files is a TV serie, the function check if a directory already exist to store it inside,
@@ -37,7 +37,7 @@ def sorting_video_files(path,files,path_dest=None):
 	furthermore, the fonction take into account if the file is a folder or file with his extension
 
 	def sorting_video_files(path,file_name,file_extension=None,path_dest=None):
-	"""
+
 
 
 	data_files.split_files(files)
@@ -130,12 +130,15 @@ def sorting_video_files(path,files,path_dest=None):
 						os.mkdir(divers_movies_folder)
 						shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
 
+"""
+
+"""
 def manage_data_video(path,path_dest=None):
 
-	"""
+
 	main function which initiate video metadata analysis, extract metadata, sorting according metadata
 
-	"""
+
 	global list_video_files
 
 	list_video_files = []
@@ -154,7 +157,8 @@ def manage_data_video(path,path_dest=None):
 
 				if path_dest != None:
 
-					sorting_video_files(path,files,path_dest)
+					#sorting_video_files(path,files,path_dest)
+					worker.files_sorting()
 
 				else:
 
@@ -167,7 +171,7 @@ def manage_data_video(path,path_dest=None):
 	print(list_video_files)
 	bar.finish()
 
-
+"""
 
 
 def main():
@@ -203,16 +207,20 @@ def main():
 			print(" -> Starting script for video files only ...")
 
 
-			worker.deduplication(path)
+			worker.files_deduplication(path)
 
 			print("NB duplicate : " + str(worker.count_duplicate))
 
 			time.sleep(5)
 
-			manage_data_video(path)
+			worker.files_sorting(path)
+
+			print("NB video file managed after deduplication " + str(worker.count_video_files))
+
+			#manage_data_video(path)
 
 
-			print(str(len(list_video_files)) +  " Video files managed ")
+			#print(str(len(list_video_files)) +  " Video files managed ")
 
 		elif args.destination:
 

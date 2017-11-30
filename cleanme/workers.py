@@ -18,9 +18,10 @@ class Worker:
     def __init__(self):
         self.files_duplicate = None
         self.count_duplicate = 0
+        self.count_video_files = 0
 
 
-    def deduplication(self,path):
+    def files_deduplication(self,path):
 
 
         def deduplication_resolution(file_resolution_1,file_resolution_2,files_number):
@@ -146,3 +147,118 @@ class Worker:
 
 
             i1 += 1
+
+    def files_sorting(self,path,path_dest=None):
+
+
+        data_files = ManageFiles()
+        video = Video()
+
+        list_files_in_dir = data_files.list_files(path)
+
+        for files in list_files_in_dir:
+
+            data_files.split_files(files)
+            filename = data_files.filename
+            file_extension = data_files.file_extension
+
+            if video.check(path,files):
+
+            	video.extract_metadata(files)
+
+            	if path_dest != None:
+
+            		if video.is_video:
+
+            			if video.is_serie:
+
+                            folder_title = "/" + video.title + "_season_" + str(video.season)
+            				specific_series_folder = path_dest + folder_title
+
+            				if data_files.file_extension != None:
+
+            					if os.path.exists(specific_series_folder):
+            						shutil.move(path + "/" + files, specific_series_folder + "/" + files)
+                                    self.count_video_files += 1
+            					else:
+            						os.mkdir(specific_series_folder)
+            						shutil.move(path + "/" + files, specific_series_folder + "/" + files)
+                                    #self.count_video_files += 1
+
+            				else:
+            					if os.path.exists(specific_series_folder):
+            						shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
+                                    #self.count_video_files += 1
+            					else:
+            						os.mkdir(specific_series_folder)
+            						shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
+                                    #self.count_video_files += 1
+            			else:
+
+            				folder_title = "/divers_movies"
+            				divers_movies_folder = path_dest + folder_title
+
+            				if data_files.file_extension != None:
+            					if os.path.exists(divers_movies_folder):
+            						shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
+                                    #self.count_video_files += 1
+            					else:
+            						os.mkdir(divers_movies_folder)
+            						shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
+                                    #self.count_video_files += 1
+            				else:
+            					if os.path.exists(divers_movies_folder):
+            						shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
+                                    #self.count_video_files += 1
+            					else:
+            						os.mkdir(divers_movies_folder)
+            						shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
+                                    #self.count_video_files += 1
+            	else:
+
+            		if video.is_video:
+
+            			if video.is_serie:
+
+            				specific_series_folder = path + "/" + video.title + "_season_" + str(video.season)
+
+            				if data_files.file_extension != None:
+
+            					if os.path.exists(specific_series_folder):
+            						shutil.move(path + "/" + files, specific_series_folder + "/" + files)
+                                    #self.count_video_files += 1
+            					else:
+            						os.mkdir(specific_series_folder)
+            						shutil.move(path + "/" + files, specific_series_folder + "/" + files)
+                                    #self.count_video_files += 1
+            				else:
+            					if os.path.exists(specific_series_folder):
+            						shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
+                                    #self.count_video_files += 1
+            					else:
+            						os.mkdir(specific_series_folder)
+            						shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
+                                    #self.count_video_files += 1
+            			else:
+
+
+            				divers_movies_folder = path + "/divers_movies"
+
+            				if data_files.file_extension != None:
+
+            					if os.path.exists(divers_movies_folder):
+            						shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
+                                    #self.count_video_files += 1
+            					else:
+            						os.mkdir(divers_movies_folder)
+            						shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
+                                    #self.count_video_files += 1
+            				else:
+
+            					if os.path.exists(divers_movies_folder):
+            						shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
+                                    #self.count_video_files += 1
+            					else:
+            						os.mkdir(divers_movies_folder)
+            						shutil.move(path + "/" + filename, divers_movies_folder + "/" + filename)
+                                    #self.count_video_files += 1
