@@ -146,13 +146,13 @@ class Video:
 
 		metadata = PTN.parse(video_file)
 
-		#print(metadata)
+		print(metadata)
 
 		video_check = ManageFiles()
 		self.video_extension = video_check.split_files(video_file)["file_extension"]
+		print(self.video_extension)
 
 		if 'title' in metadata.keys():
-
 			if 'codec' in metadata.keys():
 				if 'resolution' in metadata.keys():
 					if 'quality' in metadata.keys():
@@ -161,7 +161,6 @@ class Video:
 				elif 'quality' in metadata.keys():
 					self.is_video = True
 					return self.is_video
-
 			elif 'resolution' in metadata.keys():
 				#print("line 67 " + video_file)
 
@@ -172,6 +171,7 @@ class Video:
 					for data in video_check.list_files(deep_path):
 						self.video_extension = video_check.split_files(data)["file_extension"]
 						if self.video_extension in video_format:
+							print("ligne 173")
 							self.is_video = True
 							return self.is_video
 						else:
@@ -180,6 +180,7 @@ class Video:
 
 				elif self.video_extension != None:
 					if self.video_extension in video_format:
+						print("ligne 182")
 						self.is_video = True
 						return self.is_video
 					else:
@@ -195,6 +196,7 @@ class Video:
 					for data in video_check.list_files(deep_path):
 						self.video_extension = video_check.split_files(data)["file_extension"]
 						if self.video_extension in video_format:
+							print("ligne 198")
 							self.is_video = True
 							return self.is_video
 						else:
@@ -203,20 +205,24 @@ class Video:
 
 				elif self.video_extension != None:
 					if self.video_extension in video_format:
+						print("ligne 207")
 						self.is_video = True
 						return self.is_video
 					else:
 						self.is_video = False
 						return self.is_video
-			elif 'season' or 'episode' in metadata.keys():
+			elif 'season' in metadata.keys():#here the bug
 
 				deep_path = path + "/" + video_file
+
+				print(deep_path)
 
 				if os.path.isdir(deep_path):
 					#print("dossier video : " + video_file)
 					for data in video_check.list_files(deep_path):
 						self.video_extension = video_check.split_files(data)["file_extension"]
 						if self.video_extension in video_format:
+							print("ligne 222 :" + video_file)
 							self.is_video = True
 							return self.is_video
 						else:
@@ -225,11 +231,39 @@ class Video:
 
 				elif self.video_extension != None:
 					if self.video_extension in video_format:
+						print("ligne 231 :" + video_file )
 						self.is_video = True
 						return self.is_video
 					else:
 						self.is_video = False
 						return self.is_video
-		else:
-			self.is_video = False
-			return self.is_video
+
+			elif 'episode' in metadata.keys():
+				deep_path = path + "/" + video_file
+
+				print(deep_path)
+
+				if os.path.isdir(deep_path):
+					#print("dossier video : " + video_file)
+					for data in video_check.list_files(deep_path):
+						self.video_extension = video_check.split_files(data)["file_extension"]
+						if self.video_extension in video_format:
+							print("ligne 251 :" + video_file)
+							self.is_video = True
+							return self.is_video
+						else:
+							self.is_video = False
+							return self.is_video
+
+				elif self.video_extension != None:
+					if self.video_extension in video_format:
+						print("ligne 260 :" + video_file )
+						self.is_video = True
+						return self.is_video
+					else:
+						self.is_video = False
+						return self.is_video
+			else:
+				#ici le bug
+				self.is_video = False
+				return self.is_video

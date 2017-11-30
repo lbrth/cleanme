@@ -161,6 +161,9 @@ class Worker:
             filename = data_files.filename
             file_extension = data_files.file_extension
 
+            print(files)
+            print(video.check(path,files))
+
             if video.check(path,files):
 
                 video.extract_metadata(files)

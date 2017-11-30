@@ -209,7 +209,7 @@ def main():
 
 			worker.files_deduplication(path)
 
-			print("NB duplicate : " + str(worker.count_duplicate))
+			print("Nb duplicate : " + str(worker.count_duplicate))
 
 			time.sleep(5)
 
