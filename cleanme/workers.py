@@ -51,6 +51,7 @@ class Worker:
                     files_number -= 1
                 elif file_resolution_1 == "1080p" and file_resolution_2 == "480p":
                     os.remove(path + "/" + files[i2])
+                    self.count_duplicate += 1
                     files_number -= 1
             elif file_resolution_1 == "720p" and file_resolution_2 == None:
                 os.remove(path + "/" + files[i2])
@@ -94,7 +95,7 @@ class Worker:
 
             if video.check(path,files[i1]):
 
-                print(video.extract_metadata(files[i1]))
+                #print(video.extract_metadata(files[i1]))
 
                 serie_status_1 = video.extract_metadata(files[i1])["type"]["serie"][0]["status"]
                 serie_title_1 = video.extract_metadata(files[i1])["type"]["serie"][1]["title"]

@@ -205,12 +205,14 @@ def main():
 
 			worker.deduplication(path)
 
-			print(worker.count_duplicate)
+			print("NB duplicate : " + str(worker.count_duplicate))
 
-			#manage_data_video(path)
+			time.sleep(5)
+
+			manage_data_video(path)
 
 
-			#print(str(len(list_video_files)) +  " Video files managed ")
+			print(str(len(list_video_files)) +  " Video files managed ")
 
 		elif args.destination:
 
