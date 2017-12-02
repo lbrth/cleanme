@@ -6,6 +6,12 @@ import os.path
 
 class ManageFiles:
 
+	"""class which manage files, with two methods :
+
+		- List files in a directory
+		- Extract the filename from the file extension"""
+
+
 	def __init__(self):
 		self.list_files_in_directory = list
 		self.filename = None

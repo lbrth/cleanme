@@ -3,9 +3,7 @@
 import PTN
 import os
 import os.path
-import json
 from managefiles import ManageFiles
-import pdb
 
 global video_format
 
@@ -29,14 +27,14 @@ class Video:
 		self.language = None
 		self.extension = None
 
-	def extract_metadata(self,video_file):
+	def extract_metadata(self, video_file):
+
 		"""
 		Function which extract video metadata, using PTN library
 		Return the video type, 'TV show' or 'movie'
 
 		"""
 		metadata = PTN.parse(video_file)
-		#print(metadata)
 
 		if 'season' in metadata.keys():
 
@@ -132,9 +130,10 @@ class Video:
 
 
 
-	def check(self,path,video_file):
+	def check(self, path, video_file):
 
 		global file_extension
+
 		"""
 		function which identify if files is a video files
 
@@ -146,11 +145,8 @@ class Video:
 
 		"""
 
-
-
+		#too many lines of code, should be integrate as function 
 		metadata = PTN.parse(video_file)
-
-		#print(metadata)
 
 		video_check = ManageFiles()
 		self.video_extension = video_check.split_files(video_file)["file_extension"]
@@ -208,7 +204,7 @@ class Video:
 						self.is_video = False
 						return self.is_video
 
-			elif 'season' in metadata.keys():#here the bug
+			elif 'season' in metadata.keys():
 
 				deep_path = path + "/" + video_file
 

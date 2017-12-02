@@ -3,11 +3,6 @@
 import os
 import os.path
 import shutil
-import PTN
-import argparse
-import progressbar
-import time
-import sys
 from video import Video
 from managefiles import ManageFiles
 
@@ -15,16 +10,25 @@ from managefiles import ManageFiles
 
 class Worker:
 
+    """ Class with the two main algorithme :
+        - Algorithme to perform a deduplication task
+        - Algorithme to sort and clean files"""
+
     def __init__(self):
         self.files_duplicate = None
         self.count_duplicate = 0
         self.count_video_files = 0
 
 
-    def files_deduplication(self,path):
+    def files_deduplication(self, path):
+
+        """ Deduplication algorithm for video files"""
 
 
-        def deduplication_resolution(file_resolution_1,file_resolution_2,files_number):
+        def deduplication_resolution(file_resolution_1, file_resolution_2, files_number):
+
+            """ Local algorithm of deduplication for video resolution """
+
             if file_resolution_1 != None and file_resolution_2 != None:
                 if file_resolution_1 == file_resolution_2:
                     os.remove(path + "/" + files[i2])
@@ -96,16 +100,11 @@ class Worker:
 
             if video.check(path,files[i1]):
 
-                #print(video.extract_metadata(files[i1]))
-
-                serie_status_1 = video.extract_metadata(files[i1])["type"]["serie"][0]["status"]
                 serie_title_1 = video.extract_metadata(files[i1])["type"]["serie"][1]["title"]
                 serie_season_1 = video.extract_metadata(files[i1])["type"]["serie"][2]["season"]
                 serie_episode_1 = video.extract_metadata(files[i1])["type"]["serie"][3]["episode"]
                 serie_resolution_1 = video.extract_metadata(files[i1])["type"]["serie"][5]["resolution"]
-                serie_language_1 = video.extract_metadata(files[i1])["type"]["serie"][6]["language"]
 
-                film_status_1 = video.extract_metadata(files[i1])["type"]["film"][0]["status"]
                 film_title_1 = video.extract_metadata(files[i1])["type"]["film"][1]["title"]
                 film_resolution_1 = video.extract_metadata(files[i1])["type"]["film"][3]["resolution"]
 
@@ -115,27 +114,24 @@ class Worker:
 
                     while i2 <= files_number:
 
-                        serie_status_2 = video.extract_metadata(files[i2])["type"]["serie"][0]["status"]
                         serie_title_2 = video.extract_metadata(files[i2])["type"]["serie"][1]["title"]
                         serie_season_2 = video.extract_metadata(files[i2])["type"]["serie"][2]["season"]
                         serie_episode_2 = video.extract_metadata(files[i2])["type"]["serie"][3]["episode"]
                         serie_resolution_2 = video.extract_metadata(files[i2])["type"]["serie"][5]["resolution"]
-                        serie_language_2 = video.extract_metadata(files[i2])["type"]["serie"][6]["language"]
 
                         if serie_title_1 == serie_title_2:
                             if serie_season_1 == serie_season_2:
                                 if serie_episode_1 == serie_episode_2:
-                                    deduplication_resolution(serie_resolution_1,serie_resolution_2,files_number)
+                                    deduplication_resolution(serie_resolution_1, serie_resolution_2, files_number)
 
                         i2 += 1
 
-                else:#film
+                else:
 
                     i2 = i1 + 1
 
                     while i2 <= files_number:
 
-                        film_status_2 = video.extract_metadata(files[i2])["type"]["film"][0]["status"]
                         film_title_2 = video.extract_metadata(files[i2])["type"]["film"][1]["title"]
                         film_resolution_2 = video.extract_metadata(files[i2])["type"]["film"][3]["resolution"]
 
@@ -144,11 +140,11 @@ class Worker:
 
                         i2 += 1
 
-
-
             i1 += 1
 
-    def files_sorting(self,path,path_dest=None):
+    def files_sorting(self, path, path_dest=None):
+
+        """ Algorithm to clean and sort video files """
 
         data_files = ManageFiles()
         video = Video()
@@ -160,9 +156,6 @@ class Worker:
             data_files.split_files(files)
             filename = data_files.filename
             file_extension = data_files.file_extension
-
-            #print(files)
-            #print(video.check(path,files))
 
             if video.check(path,files):
 
