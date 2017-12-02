@@ -4,7 +4,6 @@
 import argparse
 import progressbar
 import time
-from video import Video
 from managefiles import ManageFiles
 from workers import Worker
 from termcolor import colored
@@ -102,10 +101,8 @@ def main():
 			bar.finish()
 			print(colored("Deduplication job done. ","green") + colored(str(worker.count_duplicate),"yellow") + " video files deleted during deduplication")
 
-
-
 	except FileNotFoundError as e:
-		print("Wrong or no path specified, detailed error : " + str(e))
+		print(colored("Wrong or no path specified, detailed error : " + str(e),"red"))
 
 if __name__ == '__main__':
 	main()
