@@ -7,6 +7,7 @@ import time
 from video import Video
 from managefiles import ManageFiles
 from workers import Worker
+from termcolor import colored
 
 
 def main():
@@ -38,70 +39,68 @@ def main():
 
 		if args.path and not args.with_deduplication and not args.destination and not args.only_deduplication :
 
-			print("path only")
-
-			print("Cleanme will start to cleaned up your video file directory in the path " + path)
+			print("Cleanme will start to cleaned up your video file directory in the path : " + "\n" + colored(path,'green'))
 			time.sleep(2)
 			for i in range(len(data_files.list_files(path))):
 				worker.files_sorting(path)
 				bar.update(i)
 			bar.finish()
-			print("Job done. " + str(worker.count_video_files) + " video files managed" )
+			print(colored("Job done. ","green") + colored(str(worker.count_video_files),"yellow") + " video files managed" )
 
 		elif args.path and args.destination and not args.with_deduplication:
 
 			path_dest = args.destination
 
-			print("Cleanme will start to cleaned up your video file directory in the path " + path + " \n and moved it to " + path_dest)
+			print("Cleanme will start to cleaned up your video file directory in the path : " + "\n" + colored(path,'green') + " and moved it to : " + colored(path_dest,'green'))
 			time.sleep(2)
 			for i in range(len(data_files.list_files(path))):
 				worker.files_sorting(path, path_dest)
 				bar.update(i)
 			bar.finish()
-			print("Job done. " + str(worker.count_video_files) + " video files managed" )
+			print(colored("Job done. ","green") + colored(str(worker.count_video_files),"yellow") + " video files managed" )
 
 		elif args.path and args.with_deduplication and not args.destination:
-			print("Cleame will start to deduplicate your video files and then start the job to cleaned up your video file directory in the path " + path)
+			print("Cleame will start to deduplicate your video files and then start the job to cleaned up your video file directory in the path : " + "\n" + colored(path,'green'))
 			time.sleep(2)
 			for i in range(len(data_files.list_files(path))):
 				worker.files_deduplication(path)
 				bar.update(i)
 			bar.finish()
-			print("Deduplication job done. " + str(worker.count_duplicate) + " video files deleted during deduplication")
+			print(colored("Deduplication job done. ","green") + colored(str(worker.count_duplicate),"yellow") + " video files deleted during deduplication")
 			time.sleep(2)
 			print("Cleanme will start now to cleaned up your video file directory")
 			for i in range(len(data_files.list_files(path))):
 				worker.files_sorting(path)
 				bar.update(i)
 			bar.finish()
-			print("Job done. " + str(worker.count_video_files) + " video files managed" )
+			print(colored("Job done. ","green") + colored(str(worker.count_video_files),"yellow") + " video files managed" )
 
 		elif args.path and args.with_deduplication and args.destination:
 			path_dest = args.destination
-			print("Cleame will start to deduplicate your video files and then start the job to cleaned up your video file directory in the path " + path)
+			print("Cleame will start to deduplicate your video files and then start the job to cleaned up your video file directory in the path : " + "\n" + colored(path,'green'))
 			time.sleep(2)
 			for i in range(len(data_files.list_files(path))):
 				worker.files_deduplication(path)
 				bar.update(i)
 			bar.finish()
-			print("Deduplication job done. " + str(worker.count_duplicate) + " video files deleted during deduplication")
+			print(colored("Deduplication job done. ","green") + colored(str(worker.count_duplicate),"yellow") + " video files deleted during deduplication")
 			time.sleep(2)
-			print("Cleanme will start now to cleaned up your video file directory in the path " + path + " and moved it to " + path_dest)
+			print("Cleanme will start now to cleaned up your video file directory in the path : " + "\n" + colored(path,'green') + " and moved it to : " + colored(path_dest,'green'))
 			time.sleep(2)
 			for i in range(len(data_files.list_files(path))):
 				worker.files_sorting(path, path_dest)
 				bar.update(i)
 			bar.finish()
-			print("Job done. " + str(worker.count_video_files) + " video files managed" )
+			print(colored("Job done. ","green") + colored(str(worker.count_video_files),"yellow") + " video files managed" )
 
 		elif args.path and args.only_deduplication and not args.with_deduplication and not args.destination:
-			print("Cleame will start to deduplicate your video files in the path " + path)
+			print("Cleame will start to deduplicate your video files in the path : " + "\n" + colored(path,'green'))
 			time.sleep(2)
 			for i in range(len(data_files.list_files(path))):
 				worker.files_deduplication(path)
 				bar.update(i)
 			bar.finish()
-			print("Deduplication job done. " + str(worker.count_duplicate) + " video files deleted during deduplication")
+			print(colored("Deduplication job done. ","green") + colored(str(worker.count_duplicate),"yellow") + " video files deleted during deduplication")
 
 
 
