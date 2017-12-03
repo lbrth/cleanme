@@ -145,7 +145,7 @@ class Video:
 
 		"""
 
-		#too many lines of code, should be integrate as function 
+		#too many lines of code, should be integrate as function
 		metadata = PTN.parse(video_file)
 
 		video_check = ManageFiles()
@@ -220,7 +220,6 @@ class Video:
 
 				elif self.video_extension != None:
 					if self.video_extension in video_format:
-						print("ligne 231 :" + video_file )
 						self.is_video = True
 						return self.is_video
 					else:
