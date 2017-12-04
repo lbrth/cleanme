@@ -2,7 +2,7 @@
 
 Cleanme is python script to clean a folder where video data (movie and tv serie) are randomly stored and could be as duplicate.
 
-v2.0
+v1.1
 
 **Why I need this ?**
 
