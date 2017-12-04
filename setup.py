@@ -15,5 +15,5 @@ license = 'LGPL',
 entry_points = {
     'console_scripts': ['cleanme=cleanme.cleanme:main'],
 },
-install_requires = ['parse-torrent-name','progressbar2'],
+install_requires = ['parse-torrent-name','progressbar2','termcolor'],
 )
