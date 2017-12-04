@@ -47,7 +47,10 @@ class Video:
 			self.is_movie = False
 			self.title = metadata["title"]
 			self.season = metadata["season"]
-			self.episode = metadata["episode"]
+			try:
+				self.episode = metadata["episode"]
+			except KeyError:
+				self.episode = None
 			try:
 				self.quality = metadata["quality"]
 			except KeyError:
