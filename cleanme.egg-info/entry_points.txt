@@ -1,0 +1,3 @@
+[console_scripts]
+cleanme = cleanme.cleanme:main
+

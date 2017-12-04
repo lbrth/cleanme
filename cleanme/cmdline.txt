@@ -1,1 +1,0 @@
-python3 cleanme.py -p "/users/OlivierLabarthe/Downloads" -d "/users/OlivierLabarthe/Movies"

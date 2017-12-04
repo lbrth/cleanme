@@ -1,11 +1,11 @@
 Metadata-Version: 1.0
 Name: cleanme
-Version: 0.2
-Summary: Python scripts to clean folders - specifically the folders where your movies and TV series are randomly stored (like your download folder)
-Home-page: UNKNOWN
-Author: lbrth
+Version: 2.0
+Summary: Python script to clean and deduplicate video files
+Home-page: https://github.com/lbrth/cleanme
+Author: Olivier Labarthe
 Author-email: olivierlabarthe6@gmail.com
-License: UNKNOWN
+License: LGPL
 Description-Content-Type: UNKNOWN
 Description: UNKNOWN
 Platform: UNKNOWN

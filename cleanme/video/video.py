@@ -3,13 +3,18 @@
 import PTN
 import os
 import os.path
-from managefiles import ManageFiles
+from cleanme.managefiles.managefiles import ManageFiles
 
 global video_format
 
 video_format = [".mkv",".avi",".mp4",".AVI",".MKV","MP4"]
 
 class Video:
+
+	"""Class with two main methods :
+
+	- extract metadata video
+	- check if a file is a video file """
 
 
 	def __init__(self):

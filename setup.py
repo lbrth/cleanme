@@ -1,14 +1,20 @@
-from setuptools import setup
-import os
-import cleanme
+#!/usr/bin/python
+from setuptools import setup,find_packages
+
 
 
 setup(
 name = 'cleanme',
-version = '0.2',
-author = 'lbrth',
+description = 'Python script to clean and deduplicate video files',
+url = 'https://github.com/lbrth/cleanme',
+version = '2.0',
+author = 'Olivier Labarthe',
 author_email = 'olivierlabarthe6@gmail.com',
-packages = ['cleanme'],
-description = 'Python scripts to clean folders - specifically the folders where your movies and TV series are randomly stored (like your download folder)',
-install_requires = ['parse-torrent-name','progressbar2']
+packages=find_packages(),
+license = 'LGPL',
+entry_points = {
+    'console_scripts': ['cleanme=cleanme.cleanme:main'],
+},
+install_requires = ['parse-torrent-name','progressbar2'],
+
 )

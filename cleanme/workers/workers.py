@@ -3,8 +3,8 @@
 import os
 import os.path
 import shutil
-from video import Video
-from managefiles import ManageFiles
+from cleanme.video.video import Video
+from cleanme.managefiles.managefiles import ManageFiles
 
 
 

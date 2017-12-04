@@ -2,11 +2,13 @@
 # -*- coding: utf8 -*-
 
 import argparse
-import progressbar
 import time
-from managefiles import ManageFiles
-from workers import Worker
+import progressbar
+from cleanme.managefiles.managefiles import ManageFiles
 from termcolor import colored
+from cleanme.workers.workers import Worker
+
+
 
 
 def main():
@@ -103,6 +105,7 @@ def main():
 
 	except FileNotFoundError as e:
 		print(colored("Wrong or no path specified, detailed error : " + str(e),"red"))
+
 
 if __name__ == '__main__':
 	main()
