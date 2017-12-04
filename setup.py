@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 from setuptools import setup,find_packages
 
 
@@ -16,5 +16,4 @@ entry_points = {
     'console_scripts': ['cleanme=cleanme.cleanme:main'],
 },
 install_requires = ['parse-torrent-name','progressbar2'],
-
 )
