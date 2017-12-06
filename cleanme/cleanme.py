@@ -107,5 +107,3 @@ def main():
 		print(colored("Wrong or no path specified, detailed error : " + str(e),"red"))
 
 
-if __name__ == '__main__':
-	main()
