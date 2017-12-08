@@ -24,6 +24,15 @@ class Worker:
 
         """ Deduplication algorithm for video files"""
 
+        def files_deletion(path,files):
+
+            deep_path = path + "/" + files 
+
+            if os.path.isdir(deep_path):
+                shutil.rmtree(deep_path)
+            else:
+                os.remove(deep_path)
+
 
         def deduplication_resolution(file_resolution_1, file_resolution_2, files_number):
 
@@ -31,59 +40,73 @@ class Worker:
 
             if file_resolution_1 != None and file_resolution_2 != None:
                 if file_resolution_1 == file_resolution_2:
-                    os.remove(path + "/" + files[i2])
+                    files_deletion(path,files[i2])
+                    #os.remove(path + "/" + files[i2])
                     self.count_duplicate += 1
                     files_number -= 1
                 elif file_resolution_1 == "1080p" and file_resolution_2 == "720p":
-                    os.remove(path + "/" + files[i2])
+                    files_deletion(path,files[i2])
+                    #os.remove(path + "/" + files[i2])
                     self.count_duplicate += 1
                     files_number -= 1
                 elif file_resolution_1 == "720p" and file_resolution_2 == "1080p":
-                    os.remove(path + "/" + files[i1])
+                    files_deletion(path,files[i1])
+                    #os.remove(path + "/" + files[i1])
                     self.count_duplicate += 1
                     files_number -= 1
                 elif file_resolution_1 == "720p" and file_resolution_2 == "480p":
-                    os.remove(path + "/" + files[i2])
+                    files_deletion(path,files[i2])
+                    #os.remove(path + "/" + files[i2])
                     self.count_duplicate += 1
                     files_number -= 1
                 elif file_resolution_1 == "480p" and file_resolution_2 == "720p":
-                    os.remove(path + "/" + files[i1])
+                    files_deletion(path,files[i1])
+                    #os.remove(path + "/" + files[i1])
                     self.count_duplicate += 1
                     files_number -= 1
                 elif file_resolution_1 == "480p" and file_resolution_2 == "1080p":
-                    os.remove(path + "/" + files[i1])
+                    files_deletion(path,files[i1])
+                    #os.remove(path + "/" + files[i1])
                     self.count_duplicate += 1
                     files_number -= 1
                 elif file_resolution_1 == "1080p" and file_resolution_2 == "480p":
-                    os.remove(path + "/" + files[i2])
+                    files_deletion(path,files[i2])
+                    #os.remove(path + "/" + files[i2])
                     self.count_duplicate += 1
                     files_number -= 1
             elif file_resolution_1 == "720p" and file_resolution_2 == None:
-                os.remove(path + "/" + files[i2])
+                files_deletion(path,files[i2])
+                #os.remove(path + "/" + files[i2])
                 self.count_duplicate += 1
                 files_number -= 1
             elif file_resolution_1 == "1080p" and file_resolution_2 == None:
-                os.remove(path + "/" + files[i2])
+                files_deletion(path,files[i2])
+                #os.remove(path + "/" + files[i2])
                 self.count_duplicate += 1
                 files_number -= 1
             elif file_resolution_1 == "480p" and file_resolution_2 == None:
-                os.remove(path + "/" + files[i2])
+                files_deletion(path,files[i2])
+                #os.remove(path + "/" + files[i2])
                 self.count_duplicate += 1
                 files_number -= 1
             elif file_resolution_1 == None and file_resolution_2 == "720p":
-                os.remove(path + "/" + files[i1])
+                files_deletion(path,files[i1])
+                #os.remove(path + "/" + files[i1])
                 self.count_duplicate += 1
                 files_number -= 1
             elif file_resolution_1 == None and file_resolution_2 == "1080p":
-                os.remove(path + "/" + files[i1])
+                files_deletion(path,files[i1])
+                #os.remove(path + "/" + files[i1])
                 self.count_duplicate += 1
                 files_number -= 1
             elif file_resolution_1 == None and file_resolution_2 == "480p":
-                os.remove(path + "/" + files[i1])
+                files_deletion(path,files[i1])
+                #os.remove(path + "/" + files[i1])
                 self.count_duplicate += 1
                 files_number -= 1
             elif file_resolution_1 == None and file_resolution_2 == None:
-                os.remove(path + "/" + files[i2])
+                files_deletion(path,files[i2])
+                #os.remove(path + "/" + files[i2])
                 self.count_duplicate += 1
                 files_number -= 1
 

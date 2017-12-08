@@ -3,7 +3,7 @@
 
 import argparse
 import time
-import progressbar
+from progressbar import Percentage, ProgressBar,Bar,ETA,DataSize
 from cleanme.managefiles.managefiles import ManageFiles
 from termcolor import colored
 from cleanme.workers.workers import Worker
@@ -21,9 +21,10 @@ def main():
 	worker = Worker()
 
 
-	bar = progressbar.ProgressBar(
-	widgets=[progressbar.Bar('#','[',']'),progressbar.Percentage()]
-	)
+	bar = ProgressBar(widgets=[Bar('=', '[', ']'), ' ', Percentage(), ' ',  ETA(),' size : ', DataSize()],maxval=2000)
+	#bar = progressbar.ProgressBar(
+	#widgets=[progressbar.Bar('#','[',']'),progressbar.Percentage()]
+	#)
 
 
 	parser = argparse.ArgumentParser(description=" cleanme is a python script to clean a garbage directory, like your download directory")

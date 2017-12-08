@@ -7,13 +7,13 @@ setup(
 name = 'cleanme',
 description = 'Python script to clean and deduplicate video files',
 url = 'https://github.com/lbrth/cleanme',
-version = '1.2.1',
+version = '1.2.7',
 author = 'Olivier Labarthe',
 author_email = 'olivierlabarthe6@gmail.com',
 packages=find_packages(),
 license = 'LGPL',
 entry_points = {
-    'console_scripts': ['cleanme=cleanme.cleanme:main'],
+    'console_scripts': ['cleanme=cleanme.app:main'],
 },
 install_requires = ['parse-torrent-name','progressbar2','termcolor'],
 )
