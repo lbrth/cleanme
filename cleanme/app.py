@@ -21,10 +21,7 @@ def main():
 	worker = Worker()
 
 
-	bar = ProgressBar(widgets=[Bar('=', '[', ']'), ' ', Percentage(), ' ',  ETA(),' size : ', DataSize()],maxval=2000)
-	#bar = progressbar.ProgressBar(
-	#widgets=[progressbar.Bar('#','[',']'),progressbar.Percentage()]
-	#)
+	bar = ProgressBar(widgets=[Bar('=', '[', ']'), ' ', Percentage(), ' ',  ETA(),' Size : ', DataSize()],maxval=2000)
 
 
 	parser = argparse.ArgumentParser(description=" cleanme is a python script to clean a garbage directory, like your download directory")
@@ -106,5 +103,3 @@ def main():
 
 	except FileNotFoundError as e:
 		print(colored("Wrong or no path specified, detailed error : " + str(e),"red"))
-
-
