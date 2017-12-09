@@ -4,9 +4,9 @@
 import argparse
 import time
 from progressbar import Percentage, ProgressBar,Bar,ETA,DataSize
-from cleanme.managefiles.managefiles import ManageFiles
+from managefiles.managefiles import ManageFiles
 from termcolor import colored
-from cleanme.workers.workers import Worker
+from workers.workers import Worker
 
 
 

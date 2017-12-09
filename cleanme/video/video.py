@@ -3,7 +3,7 @@
 import PTN
 import os
 import os.path
-from cleanme.managefiles.managefiles import ManageFiles
+from managefiles.managefiles import ManageFiles
 
 global video_format
 
