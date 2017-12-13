@@ -155,6 +155,89 @@ class Worker:
 
         """ Algorithm to clean and sort video files """
 
+        def moving_to(path,specific_series_folder,main_serie_folder,files,path_dest=None):
+
+            if path_dest != None:
+                if os.path.exists(path_dest + specific_series_folder):
+                    if os.path.exists(path_dest + main_serie_folder + specific_series_folder):
+                        if not data_files.list_files(path_dest + specific_series_folder):
+                            shutil.rmtree(path_dest + specific_series_folder)
+                        else:
+
+                            if os.path.exists(path + specific_series_folder):
+                                if not data_files.list_files(path + specific_series_folder):
+                                    shutil.rmtree(path + specific_series_folder)
+                                else:
+                                    shutil.move(path + specific_series_folder, path_dest + main_serie_folder)
+                                    shutil.move(path + files, path_dest + main_serie_folder + specific_series_folder)
+                                    self.count_video_files += 1
+                            else:
+                                shutil.move(path + files, path_dest + main_serie_folder + specific_series_folder)
+                                self.count_video_files += 1
+                    else:
+                        if not data_files.list_files(path_dest + specific_series_folder):
+                            shutil.rmtree(path_dest + specific_series_folder)
+                        else:
+                            shutil.move(path + files, path_dest + specific_series_folder)
+                            shutil.move(path_dest + specific_series_folder, path_dest + main_serie_folder)
+                            self.count_video_files += 1
+                else:
+                    if os.path.exists(path_dest + main_serie_folder + specific_series_folder):
+                        if os.path.exists(path + specific_series_folder):
+                            if not data_files.list_files(path + specific_series_folder):
+                                shutil.rmtree(path + specific_series_folder)
+                            else:
+                                shutil.move(path + specific_series_folder, path_dest + main_serie_folder)
+                                shutil.move(path + files, path_dest + main_serie_folder + specific_series_folder)
+                                self.count_video_files += 1
+                        else:
+                            shutil.move(path + files, path_dest + main_serie_folder + specific_series_folder)
+                            self.count_video_files += 1
+                    else: 
+                        if os.path.exists(path + specific_series_folder):
+                            if not data_files.list_files(path + specific_series_folder):
+                                shutil.rmtree(path + specific_series_folder)
+                            else:
+                                shutil.move(path + specific_series_folder, path_dest + main_serie_folder)
+                                shutil.move(path + files, path_dest + main_serie_folder + specific_series_folder)
+                                self.count_video_files += 1
+                        else:
+                            os.mkdir(path_dest + main_serie_folder + specific_series_folder)
+                            shutil.move(path + files, path_dest + main_serie_folder + specific_series_folder)
+                            self.count_video_files += 1
+
+            else:
+
+                if os.path.exists(path + specific_series_folder):
+
+                    if os.path.exists(path + main_serie_folder + specific_series_folder):
+
+                        if not data_files.list_files(path + specific_series_folder):
+                            shutil.rmtree(path + specific_series_folder)
+                        else:
+
+                            shutil.move(path + specific_series_folder, path + main_serie_folder)
+                            shutil.move(path + files, path + main_serie_folder + specific_series_folder)
+                            self.count_video_files += 1
+                    else:
+
+                        if not data_files.list_files(path + specific_series_folder):
+                            shutil.rmtree(path + specific_series_folder)
+                        else:
+                            shutil.move(path + files, path + specific_series_folder)
+                            shutil.move(path + specific_series_folder, path + main_serie_folder + specific_series_folder)
+                            self.count_video_files += 1
+                else:
+                    if os.path.exists(path + main_serie_folder + specific_series_folder):
+                        shutil.move(path + files, path + main_serie_folder + specific_series_folder)
+                        self.count_video_files += 1
+                    else:
+                        os.mkdir(path + main_serie_folder + specific_series_folder)
+                        shutil.move(path + files, path + main_serie_folder + specific_series_folder)
+                        self.count_video_files += 1
+
+
+
         data_files = ManageFiles()
         video = Video()
 
@@ -176,28 +259,24 @@ class Worker:
 
                         if video.is_serie:
 
-                            folder_title = "/" + video.title + "_season_" + str(video.season)
-                            specific_series_folder = path_dest + folder_title
+                            specific_series_folder =  "/" + video.title + "_season_" + str(video.season)
+                            main_serie_folder = "/Series"
 
                             if data_files.file_extension != None:
 
-                                if os.path.exists(specific_series_folder):
-                                    shutil.move(path + "/" + files, specific_series_folder + "/" + files)
-                                    self.count_video_files += 1
+
+                                if os.path.exists(path_dest + main_serie_folder):
+                                    
+                                    moving_to(path,specific_series_folder,main_serie_folder,files,path_dest)
+
                                 else:
-                                    os.mkdir(specific_series_folder)
-                                    shutil.move(path + "/" + files, specific_series_folder + "/" + files)
-                                    self.count_video_files += 1
-                            else:
-                                if os.path.exists(specific_series_folder):
-                                    shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
-                                    self.count_video_files += 1
-                                else:
-                                    os.mkdir(specific_series_folder)
-                                    shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
-                                    self.count_video_files += 1
+                                    
+                                    os.mkdir(path_dest + main_serie_folder)
+
+                                    moving_to(path,specific_series_folder,main_serie_folder,files,path_dest)
+
                         else:
-                            folder_title = "/divers_movies"
+                            folder_title = "/Films"
                             divers_movies_folder = path_dest + folder_title
 
                             if data_files.file_extension != None:
@@ -222,28 +301,25 @@ class Worker:
 
                         if video.is_serie:
 
-                            specific_series_folder = path + "/" + video.title + "_season_" + str(video.season)
+                            specific_series_folder =  "/" + video.title + "_season_" + str(video.season)
+                            main_serie_folder = "/Series"
 
                             if data_files.file_extension != None:
 
-                                if os.path.exists(specific_series_folder):
-                                    shutil.move(path + "/" + files, specific_series_folder + "/" + files)
-                                    self.count_video_files += 1
+
+                                if os.path.exists(path + main_serie_folder):
+                                    
+                                    moving_to(path,specific_series_folder,main_serie_folder,files)
+
                                 else:
-                                    os.mkdir(specific_series_folder)
-                                    shutil.move(path + "/" + files, specific_series_folder + "/" + files)
-                                    self.count_video_files += 1
-                            else:
-                                if os.path.exists(specific_series_folder):
-                                    shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
-                                    self.count_video_files += 1
-                                else:
-                                    os.mkdir(specific_series_folder)
-                                    shutil.move(path + "/" + filename, specific_series_folder + "/" + filename)
-                                    self.count_video_files += 1
+                                    
+                                    os.mkdir(path + main_serie_folder)
+
+                                    moving_to(path,specific_series_folder,main_serie_folder,files)
+
                         else:
 
-                            divers_movies_folder = path + "/divers_movies"
+                            divers_movies_folder = path + "/Films"
 
                             if data_files.file_extension != None:
 
