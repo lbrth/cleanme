@@ -155,7 +155,7 @@ class Worker:
 
         """ Algorithm to clean and sort video files """
 
-        def moving_to(path,specific_series_folder,main_serie_folder,files,path_dest=None):
+        def moving_to(path, specific_series_folder, main_serie_folder, files, path_dest=None):
 
             if path_dest != None:
                 if os.path.exists(path_dest + specific_series_folder):
@@ -163,7 +163,6 @@ class Worker:
                         if not data_files.list_files(path_dest + specific_series_folder):
                             shutil.rmtree(path_dest + specific_series_folder)
                         else:
-
                             if os.path.exists(path + specific_series_folder):
                                 if not data_files.list_files(path + specific_series_folder):
                                     shutil.rmtree(path + specific_series_folder)
@@ -193,7 +192,7 @@ class Worker:
                         else:
                             shutil.move(path + files, path_dest + main_serie_folder + specific_series_folder)
                             self.count_video_files += 1
-                    else: 
+                    else:
                         if os.path.exists(path + specific_series_folder):
                             if not data_files.list_files(path + specific_series_folder):
                                 shutil.rmtree(path + specific_series_folder)
@@ -205,22 +204,16 @@ class Worker:
                             os.mkdir(path_dest + main_serie_folder + specific_series_folder)
                             shutil.move(path + files, path_dest + main_serie_folder + specific_series_folder)
                             self.count_video_files += 1
-
             else:
-
                 if os.path.exists(path + specific_series_folder):
-
                     if os.path.exists(path + main_serie_folder + specific_series_folder):
-
                         if not data_files.list_files(path + specific_series_folder):
                             shutil.rmtree(path + specific_series_folder)
                         else:
-
                             shutil.move(path + specific_series_folder, path + main_serie_folder)
                             shutil.move(path + files, path + main_serie_folder + specific_series_folder)
                             self.count_video_files += 1
                     else:
-
                         if not data_files.list_files(path + specific_series_folder):
                             shutil.rmtree(path + specific_series_folder)
                         else:
@@ -237,7 +230,6 @@ class Worker:
                         self.count_video_files += 1
 
 
-
         data_files = ManageFiles()
         video = Video()
 
@@ -247,7 +239,6 @@ class Worker:
 
             data_files.split_files(files)
             filename = data_files.filename
-            file_extension = data_files.file_extension
 
             if video.check(path,files):
 
@@ -264,15 +255,10 @@ class Worker:
 
                             if data_files.file_extension != None:
 
-
                                 if os.path.exists(path_dest + main_serie_folder):
-                                    
                                     moving_to(path,specific_series_folder,main_serie_folder,files,path_dest)
-
                                 else:
-                                    
                                     os.mkdir(path_dest + main_serie_folder)
-
                                     moving_to(path,specific_series_folder,main_serie_folder,files,path_dest)
 
                         else:
@@ -308,13 +294,9 @@ class Worker:
 
 
                                 if os.path.exists(path + main_serie_folder):
-                                    
                                     moving_to(path,specific_series_folder,main_serie_folder,files)
-
                                 else:
-                                    
                                     os.mkdir(path + main_serie_folder)
-
                                     moving_to(path,specific_series_folder,main_serie_folder,files)
 
                         else:

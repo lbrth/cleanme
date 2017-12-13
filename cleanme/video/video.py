@@ -159,6 +159,7 @@ class Video:
 		video_check = ManageFiles()
 		self.video_extension = video_check.split_files(video_file)["file_extension"]
 
+
 		if 'title' in metadata.keys():
 			if 'codec' in metadata.keys():
 				if 'resolution' in metadata.keys():
@@ -255,6 +256,9 @@ class Video:
 					else:
 						self.is_video = False
 						return self.is_video
+			elif self.video_extension in video_format:
+				self.is_video = True
+				return self.is_video
 			else:
 				self.is_video = False
 				return self.is_video
