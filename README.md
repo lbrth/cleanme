@@ -32,8 +32,7 @@ It's a script using as command line tool with 3 main options for the moment.
 
 usage: cleanme [-h] -p PATH [-wd] [-od] [-d DESTINATION]
 
-cleanme is a python script to clean a garbage directory, like your download
-directory
+Python script to clean video folder : Deduplication - TV Series are sort by name and season - Films are sort inside unique folder
 
 optional arguments:
   -h, --help            show this help message and exit
