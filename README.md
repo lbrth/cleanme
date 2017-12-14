@@ -1,8 +1,9 @@
 # cleanme
 
-Cleanme is python script to clean a folder where video data (movie and tv serie) are randomly stored and could be as duplicate.
+Cleanme is python script to clean a folder where video data (films and tv series) are randomly stored and could be as duplicate.
 
-`v1.2.1`
+`v1.3.1`
+Python Version  : 3.5
 
 **Why I need this ?**
 
@@ -10,7 +11,7 @@ Simply because I wanna clean my destination folder  of all my downloads. My movi
 
 **What does this script do? ?**
 
-Cleanme can detect if the file or the folder is a Tv serie or a movie. If it's a Tv serie, the script create a specifique folder with the name and the season of serie like : `Silicon Valley_season_4`. If it's a movie, the script create a folder named `divers_movies`and store it inside. For both of them, the script check if the folder already exist, if exist, it move data inside.
+Cleanme can detect if the file or the folder is a Tv serie or a film. If it's a Tv serie, the script create a specifique folder with the name and the season of serie like : `Silicon Valley_season_4` and put inside a specifique folder for series, named `Series`. If it's a film, the script create a folder named `Film`and store it inside. For both of them, the script check if the folder already exist, if exist, it move data inside.
 
 Cleanme can also detect video duplicates in your folder. The algorithm of deduplication is based on video metadata, and make the difference between several video resolution (1080p,720p,480p) to keep the best one. 
 
@@ -21,7 +22,7 @@ Some enhancement are in progress to do same things but for music files and may b
 
 **How to install ?**
 
-After download, run `python setup.py install`.
+After download, run `python setup.py install`. run it with `sudo` if there is some troublshouting during installation.
 
 **How to use it ?**
 
@@ -45,3 +46,7 @@ optional arguments:
  -od, --only_deduplication       Use -od to activate only the deduplication feature
   
 ```
+
+**Exemples**
+
+```python3 cleanme -p /path/to/video/ -d /other/path/ -wd```
