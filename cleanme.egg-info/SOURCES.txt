@@ -1,7 +1,8 @@
 README.md
 setup.py
 cleanme/__init__.py
-cleanme/cleanme.py
+cleanme/__main__.py
+cleanme/app.py
 cleanme.egg-info/PKG-INFO
 cleanme.egg-info/SOURCES.txt
 cleanme.egg-info/dependency_links.txt

@@ -157,6 +157,7 @@ class Video:
 		#too many lines of code, should be integrate as function
 		metadata = PTN.parse(video_file)
 
+		print(metadata)
 
 		video_check = ManageFiles()
 		self.video_extension = video_check.split_files(video_file)["file_extension"]
@@ -173,6 +174,7 @@ class Video:
 				elif 'codec' in codec:
 					self.is_video = True
 					return self.is_video
+
 			elif 'resolution' in metadata.keys():
 
 				deep_path = path + "/" + video_file

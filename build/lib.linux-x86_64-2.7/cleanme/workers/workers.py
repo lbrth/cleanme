@@ -252,11 +252,13 @@ class Worker:
                             specific_series_folder =  "/" + video.title + "_season_" + str(video.season)
                             main_serie_folder = "/Series"
 
+
                             if os.path.exists(path_dest + main_serie_folder):
                                 moving_to(path,specific_series_folder,main_serie_folder,files,path_dest)
                             else:
                                 os.mkdir(path_dest + main_serie_folder)
                                 moving_to(path,specific_series_folder,main_serie_folder,files,path_dest)
+
                         else:
                             folder_title = "/Films"
                             divers_movies_folder = path_dest + folder_title
@@ -268,6 +270,7 @@ class Worker:
                                 os.mkdir(divers_movies_folder)
                                 shutil.move(path + "/" + files, divers_movies_folder + "/" + files)
                                 self.count_video_files += 1
+
                 else:
 
                     if video.is_video:
@@ -282,6 +285,7 @@ class Worker:
                             else:
                                 os.mkdir(path + main_serie_folder)
                                 moving_to(path,specific_series_folder,main_serie_folder,files)
+
                         else:
 
                             divers_movies_folder = path + "/Films"
