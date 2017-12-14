@@ -24,7 +24,7 @@ def main():
 	bar = ProgressBar(widgets=[Bar('=', '[', ']'), ' ', Percentage(), ' ',  ETA(),' Size : ', DataSize()],maxval=2000)
 
 
-	parser = argparse.ArgumentParser(description=" cleanme is a python script to clean a garbage directory, like your download directory")
+	parser = argparse.ArgumentParser(description=" Python scripts to clean video folder : Deduplication - TV Series are sort by name and season - Films are sort inside unique folder")
 	parser.add_argument('-p','--path',action="store",help=" Enter the source path of the directory to be cleaned",type=str,required=True)
 	parser.add_argument('-wd','--with_deduplication',action="store_true",help=" Use -wd to activate the deduplication feature with the cleaning job", default=False)
 	parser.add_argument('-od','--only_deduplication',action="store_true",help=" Use -od to activate only the deduplication feature", default=False)
